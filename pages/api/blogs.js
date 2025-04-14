@@ -2,29 +2,22 @@
 const fs = require("fs/promises");
 const path = require("path");
 
-export default async (req, res) => {
-  console.log(await fs.readdir(process.cwd()));
-
-  let dirname = process.env.BLOG_DATA_FOLDER,
-    files_str = await fs.readdir(path.join(process.cwd(), dirname)),
-    filenames = files_str,
-    total_blogs = filenames.length,
-    file_extension = ".json",
-    blogs_count = 3,
-    blogs = [];
-
-  if (req.query.count) {
-    blogs_count = parseInt(req.query.count);
-  }
-
-  filenames = filenames.slice(0, blogs_count);
+export default async (_req, res) => {
+  const filenames = [
+    "how-to-be-a-coder.json",
+    "how-to-learn-flask.json",
+    "how-to-learn-nextjs.json",
+    "how-to-learn-unity-3d.json",
+    "how-to-learn-django.json",
+    "how-to-learn-javascript.json",
+    "how-to-learn-python.json",
+  ];
   /***
    * ```|_ Do not use forEach with async-await _|```
    * Fortunately if your language has async-await then it will also have the `for...of` construction, so you can use that */
   for (const filename of filenames) {
     if (filename.includes(file_extension)) {
-      let content = await fs.readFile(`${dirname}/${filename}`, "utf-8");
-      let data = JSON.parse(content);
+      let data = await fetch(`${process.env.HOST_URL}/data/${filename}`);
       blogs.push({
         slug: filename.replace(file_extension, ""),
         ...data,

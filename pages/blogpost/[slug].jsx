@@ -22,14 +22,7 @@ const Slug = (props) => {
 };
 
 const renderBlogPost = async (slug) => {
-    let response = await fetch(`${process.env.HOST_URL}/api/blogpost/`, {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ slug: slug })
-    });
+    let response = await fetch(`${process.env.HOST_URL}/data/${slug}.json`);
     let data = await response.json();
     return data;
 };
