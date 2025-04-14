@@ -3,10 +3,8 @@ const fs = require("fs/promises");
 const path = require("path");
 
 export default async (req, res) => {
-  console.log(await fs.readdir(path.join(process.cwd(), "..")));
-
   let dirname = process.env.BLOG_DATA_FOLDER,
-    files_str = await fs.readdir(path.join(process.cwd(), dirname)),
+    files_str = await fs.readdir(dirname),
     filenames = files_str,
     total_blogs = filenames.length,
     file_extension = ".json",
