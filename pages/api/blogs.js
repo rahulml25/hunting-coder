@@ -1,13 +1,13 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-const fs = require('fs/promises');
+const fs = require("fs/promises");
+const path = require("path");
 
 export default async (req, res) => {
-  let
-    dirname = process.env.BLOG_DATA_FOLDER,
-    files_str = await fs.readdir(dirname),
+  let dirname = process.env.BLOG_DATA_FOLDER,
+    files_str = await fs.readdir(path.join(process.cwd(), dirname)),
     filenames = Array(files_str)[0],
     total_blogs = filenames.length,
-    file_extension = '.json',
+    file_extension = ".json",
     blogs_count = 3,
     blogs = [];
 
@@ -21,14 +21,12 @@ export default async (req, res) => {
    * Fortunately if your language has async-await then it will also have the `for...of` construction, so you can use that */
   for (const filename of filenames) {
     if (filename.includes(file_extension)) {
-      let content = await fs.readFile(`${dirname}/${filename}`, 'utf-8');
+      let content = await fs.readFile(`${dirname}/${filename}`, "utf-8");
       let data = JSON.parse(content);
-      blogs.push(
-        {
-          slug: filename.replace(file_extension, ''),
-          ...data
-        }
-      );
+      blogs.push({
+        slug: filename.replace(file_extension, ""),
+        ...data,
+      });
     }
   }
 
