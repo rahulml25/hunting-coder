@@ -22,7 +22,7 @@ const Slug = (props) => {
 };
 
 const renderBlogPost = async (slug) => {
-    let response = await fetch(`${process.env.HOST_URL}/data/${slug}.json`);
+    let response = await fetch(`${process.env.HOST_URL}/data/blogs/${slug}.json`);
     let data = await response.json();
     return data;
 };
