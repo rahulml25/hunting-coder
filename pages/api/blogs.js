@@ -3,7 +3,7 @@ const fs = require("fs/promises");
 const path = require("path");
 
 export default async (req, res) => {
-  console.log(await fs.readdir(process.cwd()));
+  console.log(await fs.readdir(path.join(process.cwd(), "..")));
 
   let dirname = process.env.BLOG_DATA_FOLDER,
     files_str = await fs.readdir(path.join(process.cwd(), dirname)),
