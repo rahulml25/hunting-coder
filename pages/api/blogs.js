@@ -27,7 +27,10 @@ export default async (req, res) => {
    * Fortunately if your language has async-await then it will also have the `for...of` construction, so you can use that */
   for (const filename of filenames) {
     if (filename.includes(file_extension)) {
-      let data = await fetch(`${process.env.HOST_URL}/data/${filename}`);
+      let data = await fetch(
+        `${process.env.HOST_URL}/data/blogs/${filename}`
+      ).then((res) => res.json());
+
       blogs.push({
         slug: filename.replace(file_extension, ""),
         ...data,
